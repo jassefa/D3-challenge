@@ -3,7 +3,7 @@ var svgHeight = 500;
 
 var margin = {
   top: 20,
-  right: 40,
+  right: 10,
   bottom: 80,
   left: 100
 };
@@ -14,7 +14,7 @@ var height = svgHeight - margin.top - margin.bottom;
 // Create an SVG wrapper, append an SVG group that will hold our chart,
 // and shift the latter by left and top margins.
 var svg = d3
-  .select(".chart")
+  .select("#chart")
   .append("svg")
   .attr("width", svgWidth)
   .attr("height", svgHeight);
@@ -93,7 +93,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 d3.csv("assets/data/data.csv").then(function(Data,err) {
     if (err) throw err;
 
-    // console.log(Data);
+    console.log(Data);
 
       // parse data
   Data.forEach(function(data) {
@@ -135,22 +135,34 @@ d3.csv("assets/data/data.csv").then(function(Data,err) {
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", 20)
-
 //   .attr("fill", "pink")
 //   .attr("opacity", ".5");
-  var lableText = chartGroup.selectAll("circle")
+
+  // var lableText = chartGroup.append("g")
+    // .selectAll("text")
+    // .data(Data)
+    // .enter()
+    // .append("text")
+    // .attr("class", "stateText")
+    // .attr("x", d => xLinearScale(d.chosenXAxis))
+    // .attr("y", d => yLinearScale(d.healthcare))
+    // .text(d=>d.abbr)
+
+    var lableText = chartGroup.append("g")
+    .selectAll("text")
     .data(Data)
     .enter()
     .append("text")
     .attr("class", "stateText")
-    .attr("cx", d => xLinearScale(d[chosenXAxis]))
-    .attr("cy", d => yLinearScale(d.healthcare))
-    .text(d=>d.abbr)
+    .text(d => d.abbr)
+    .attr("x", d => xLinearScale(d.chosenXAxis)-8)
+    .attr("y", d => yLinearScale(d.healthcare)+5);
 
   // Create group for two x-axis labels
   var labelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height + 20})`);
 
+  //1st x-axis
   var povertyLabel = labelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 20)
@@ -158,6 +170,7 @@ d3.csv("assets/data/data.csv").then(function(Data,err) {
     .classed("active", true)
     .text("Poverty Rate");
 
+    //1st x-axis
   var obesityLabel = labelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 40)
@@ -172,10 +185,10 @@ d3.csv("assets/data/data.csv").then(function(Data,err) {
       .attr("x", 0 - (height / 2))
       .attr("dy", "1em")
       .classed("axis-text", true)
-      .text("Health Rating");
+      .text("Lacks Healthare (%)");
 
 // updateToolTip function above csv import
-//   var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+  var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
 // x axis labels event listener
   labelsGroup.selectAll("text")
@@ -221,6 +234,9 @@ d3.csv("assets/data/data.csv").then(function(Data,err) {
         }
       } 
     });
-}).catch(function(error) {
+})
+
+.catch(function(error) {
  console.log(error);
+
 });
