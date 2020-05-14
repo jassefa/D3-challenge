@@ -1,4 +1,4 @@
-var svgWidth = 900;
+var svgWidth = 970;
 var svgHeight = 500;
 
 var margin = {
@@ -30,8 +30,8 @@ function xScale(Data, chosenXAxis) {
 
 // create scales
   var xLinearScale = d3.scaleLinear()
-    .domain([d3.min(Data, d => d[chosenXAxis]) * 0.8,
-      d3.max(Data, d => d[chosenXAxis]) * 1.2
+    .domain([d3.min(Data, d => d[chosenXAxis]) * 0.95,
+      d3.max(Data, d => d[chosenXAxis]) * 1.04
     ])
     .range([0, width]);
   return xLinearScale;
