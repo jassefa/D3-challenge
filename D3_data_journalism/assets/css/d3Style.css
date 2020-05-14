@@ -23,10 +23,11 @@
   cursor: pointer;
 } 
 
-font size dependent on radius, see app.js
+/* font size dependent on radius, see app.js */
 .stateText {
-  font-family: sans-serif;
-  fill: #fff;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: small;
+  fill: rgb(255, 255, 255);
   text-anchor: middle;
 }
  
@@ -41,7 +42,7 @@ font size dependent on radius, see app.js
 } 
 
 .d3-tip {
-  padding: 6px;
+  padding: 20px;
   font-size: 12px;
   line-height: 1;
   line-height: 1.5em;
